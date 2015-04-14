@@ -1,0 +1,67 @@
+<template>
+  <div class="panel panel-default">
+    <div class="panel-heading pointer" click.delegate="app.selectedMenu = collectionSlug">
+      <span class="pull-right">
+        &nbsp;
+        <a href="#" click.delegate="newInstance = newInstance || {}">
+          <i class="fa fa-plus"
+             data-hover="tooltip"
+             data-placement="right"
+             title="Add&nbsp;a${nameBeginsWithVowel ? 'n' : ''}&nbsp;${collectionNameSingular}">
+          </i>
+        </a>
+      </span>
+      <h3 class="panel-title">
+        <i class="fa ${app.iconMap[collectionSlug]}"></i> &nbsp;
+        <a href="#">${collectionName}</a>
+
+        <span class="label label-warning label-as-badge pull-right">${collection.length}</span>
+      </h3>
+    </div>
+
+    <div class="panel-body" if.bind="newInstance && app.selectedMenu === collectionSlug">
+      <form role="form" class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-4 control-label">Name</label>
+          <div class="col-sm-8">
+            <input type="text" placeholder="name" class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label">Description</label>
+          <div class="col-sm-8">
+            <input type="text" placeholder="description" class="form-control">
+          </div>
+        </div>
+      </form>
+
+      <button class="btn btn-sm btn-success pull-right"
+              click.delegate="add(newInstance)">
+        <i class="fa fa-save"></i> &nbsp;
+        <span>Save</span>
+      </button>
+
+      <button class="btn btn-sm btn-default"
+              click.delegate="cancel($event)">
+        <i class="fa fa-remove"></i> &nbsp;
+        <span>Cancel</span>
+      </button>
+    </div>
+
+    <ul class="list-group" if.bind="app.selectedMenu === collectionSlug">
+      <li repeat.for="item of collection"
+          click.delegate="$parent.select(item)"
+          class="list-group-item ${item.id == $parent.app.selectedId ? 'active' : 'pointer'}">
+
+        <h4 class="list-group-item-heading">
+          <a href="#">${item.name}</a>
+          <small if.bind="$parent.extraDescriptionProperty">
+            &nbsp;
+            ${item[$parent.extraDescriptionProperty]}
+          </small>
+        </h4>
+        <p class="list-group-item-text">${item.description}</p>
+      </li>
+    </ul>
+  </div>
+</template>

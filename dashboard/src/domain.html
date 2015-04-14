@@ -1,0 +1,214 @@
+<template>
+  <div class="row">
+    <div class="col-xs-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="fa fa-pencil-square-o"></i> &nbsp;
+            <span>Edit Domain</span>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <form role="form" class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">URL</label>
+              <div class="col-sm-10">
+                <input type="text" placeholder="domain.url" class="form-control" value.bind="domain.url">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Name</label>
+              <div class="col-sm-10">
+                <input type="text" placeholder="domain.name" class="form-control" value.bind="domain.name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Description</label>
+              <div class="col-sm-10">
+                <input type="text" placeholder="description" class="form-control" value.bind="domain.description">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="panel-footer">
+          <button class="btn btn-sm btn-success pull-right"
+                  click.delegate="save()"
+                  disabled.bind="!canSave">
+            <i class="fa fa-save"></i> &nbsp;
+            <span>Save</span>
+          </button>
+
+          <button class="btn btn-sm btn-default"
+                  click.delegate="cancel()"
+                  disabled.bind="!canCancel">
+            <i class="fa fa-recycle"></i> &nbsp;
+            <span>Cancel</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="fa fa-key"></i> &nbsp;
+            <span>Public Key</span>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <textarea class="form-control" rows="6">${domain.publicKey}</textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <i class="fa fa-hdd-o"></i> &nbsp;
+        <span>Machines</span>
+      </h3>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <th>Name:</th>
+        <th>IP:</th>
+        <th>Status:</th>
+        <th>Description:</th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        <tr repeat.for="machine of domain.machines">
+          <td>
+            <a href="#/m/${machine.name}">
+              <strong>${machine.name}</strong>
+            </a>
+          </td>
+          <td>
+            ${machine.ip}
+          </td>
+          <td>
+            ${machine.status[$parent.domain.id]}
+          </td>
+          <td>
+            <p class="text-muted">${machine.description}</p>
+          </td>
+          <td>
+            <button class="btn btn-xs btn-primary" type="button">
+              <i class="fa fa-magnet fa-rotate-90"></i> &nbsp;
+              <span>Connect</span>
+            </button>
+            &nbsp;
+            <button class="btn btn-xs btn-danger" type="button">
+              <i class="fa fa-remove"></i> &nbsp;
+              <span>Remove</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="panel-footer text-right" if.bind="availableMachines.length">
+      <form class="form-inline">
+        <div class="form-group form-group-sm">
+          <select class="form-control">
+            <option repeat.for="machine of availableMachines">
+              ${machine.name} - ${machine.ip}
+            </option>
+          </select>
+          &nbsp;
+          <button class="btn btn-sm btn-primary">
+            <i class="fa fa-plus"></i> &nbsp;
+            <span>Add Machine</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <form class="pull-right">
+        <div class="form-group">
+          <select class="form-control input-xs">
+            <option>(All logs)</option>
+            <option repeat.for="machine of domain.machines">
+              ${machine.name} - ${machine.ip}
+            </option>
+          </select>
+        </div>
+      </form>
+
+      <h3 class="panel-title">
+        <i class="fa fa-terminal"></i> &nbsp;
+        <span>Logs</span>
+      </h3>
+    </div>
+    <div class="panel-body">
+      <samp>
+        <pre class="console">> This text is meant to be treated as sample output from a
+computer program.</pre>
+      </samp>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <i class="fa fa-tasks"></i> &nbsp;
+        <span>Operations</span>
+      </h3>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <th>Name:</th>
+        <th>Command:</th>
+        <th>Description:</th>
+        <th>Status:</th>
+        <th>CPU:</th>
+        <th>Memory:</th>
+        <th>Disk:</th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        <tr repeat.for="operation of app.operations"
+            if.bind="operation.domainId === $parent.domain.id">
+          <td>
+            <a href="#/o/${operation.name}">
+              <strong>${operation.name}</strong>
+            </a>
+          </td>
+          <td>
+            ${operation.command}
+          </td>
+          <td>
+            <p class="text-muted">${operation.description}</p>
+          </td>
+          <td>
+            ${operation.status}
+          </td>
+          <td>
+            ${operation.stats[0].cpus}
+          </td>
+          <td>
+            ${operation.stats[0].memory}
+          </td>
+          <td>
+            ${operation.stats[0].disk}
+          </td>
+          <td>
+            <button class="btn btn-xs btn-warning" type="button">
+              <i class="fa fa-refresh"></i> &nbsp;
+              <span>Restart</span>
+            </button>
+            &nbsp;
+            <button class="btn btn-xs btn-danger" type="button">
+              <i class="fa fa-remove"></i> &nbsp;
+              <span>Kill</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>

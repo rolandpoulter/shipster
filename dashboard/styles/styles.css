@@ -1,0 +1,85 @@
+body {
+  margin: 25px;
+}
+
+.splash {
+  text-align: center;
+  margin: 15% 0 0 0;
+}
+
+.splash .message {
+  font-size: 2em;
+  line-height: 1.5em;
+  margin-top: 50px;
+  -webkit-text-shadow: rgba(0, 0, 0, 0.5) 0 0 15px;
+  text-shadow: rgba(0, 0, 0, 0.5) 0 0 15px;
+  text-transform: uppercase;
+}
+
+.splash .fa-spinner {
+  text-align: center;
+  display: inline-block;
+  font-size: 5em;
+}
+
+.pointer {cursor: pointer;}
+.show {display: inline-block !important;}
+.hide {display: none !important;}
+
+.well.active {
+  color: #fff;
+  background: #337ab7;
+  border-color: #337ab7;
+}
+
+.well.active a {
+  color: white;
+}
+
+section {
+  margin: 0 20px;
+}
+
+a:focus {
+  outline: none;
+}
+
+.navbar-nav li.loader {
+  margin: 12px 24px 0 6px;
+}
+
+.no-selection {
+  margin: 20px;
+}
+
+li.list-group-item {
+  list-style: none;
+}
+
+li.list-group-item a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+li.list-group-item.active a {
+  color: white;
+}
+
+.input-xs, select.input-xs {
+  height: 20px;
+  line-height: 20px;
+}
+
+.label-as-badge {
+  border-radius: 1em;
+}
+
+pre.console {
+  color: #00bc8c;
+  background: #111;
+  border-color: #666;
+}
+
+ul.list-group li.list-group-item.active {
+  border-radius: 3px;
+}

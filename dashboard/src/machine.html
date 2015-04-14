@@ -1,0 +1,250 @@
+<template>
+  <div class="row">
+    <div class="col-xs-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="fa fa-pencil-square-o"></i> &nbsp;
+            <span>Edit Machine</span>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <form role="form" class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Name</label>
+              <div class="col-sm-10">
+                <input type="text" placeholder="raspberry pi" class="form-control" value.bind="machine.name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">IP</label>
+              <div class="col-sm-10">
+                <input type="text" placeholder="0.0.0.0" class="form-control" value.bind="machine.ip">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Description</label>
+              <div class="col-sm-10">
+                <input type="text" placeholder="red box" class="form-control" value.bind="machine.description">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="panel-footer">
+          <button class="btn btn-sm btn-success pull-right"
+                  click.delegate="save()"
+                  disabled.bind="!canSave">
+            <i class="fa fa-save"></i> &nbsp;
+            <span>Save</span>
+          </button>
+
+          <button class="btn btn-sm btn-default"
+                  click.delegate="cancel()"
+                  disabled.bind="!canCancel">
+            <i class="fa fa-recycle"></i> &nbsp;
+            <span>Cancel</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="fa fa-dot-circle-o"></i> &nbsp;
+            <span>Platform</span>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <strong class="col-xs-5 text-muted">OS</strong>
+            <span class="col-xs-7">${machine.platform.os}</span>
+          </div>
+          <div class="row">
+            <strong class="col-xs-5 text-muted">Name</strong>
+            <span class="col-xs-7">
+              <a href="#/p/${machine.platform.name}">${machine.platform.name}</a>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="fa fa-info-circle"></i> &nbsp;
+            <span>Details</span>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <strong class="col-xs-5 text-muted">Architecture</strong>
+            <span class="col-xs-7">${machine.architecture}</span>
+          </div>
+          <div class="row">
+            <strong class="col-xs-5 text-muted">CPUs</strong>
+            <span class="col-xs-7">${machine.resources.cpus}</span>
+          </div>
+          <div class="row">
+            <strong class="col-xs-5 text-muted">Memory</strong>
+            <span class="col-xs-7">${machine.resources.memory}</span>
+          </div>
+          <div class="row">
+            <strong class="col-xs-5 text-muted">Disk</strong>
+            <span class="col-xs-7">${machine.resources.disk}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <i class="fa fa-globe"></i> &nbsp;
+        <span>Domain Status</span>
+      </h3>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <th>Name:</th>
+        <th>URL:</th>
+        <th>Status:</th>
+        <th>Description:</th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        <tr repeat.for="domain of linkedDomains">
+          <td>
+            <a href="#/d/${domain.name}">
+              <strong>${domain.name}</strong>
+            </a>
+          </td>
+          <td>
+            <p>${domain.url}</p>
+          </td>
+          <td>
+            ${$parent.machine.status[domain.id]}
+          </td>
+          <td>
+            <p class="text-muted">${domain.description}</p>
+          </td>
+          <td>
+            <button class="btn btn-xs btn-primary" type="button">
+              <i class="fa fa-magnet fa-rotate-90"></i> &nbsp;
+              <span>Connect</span>
+            </button>
+            &nbsp;
+            <button class="btn btn-xs btn-danger" type="button">
+              <i class="fa fa-remove"></i> &nbsp;
+              <span>Remove</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="panel-footer text-right" if.bind="availableDomains.length">
+      <form class="form-inline">
+        <div class="form-group form-group-sm">
+          <select class="form-control">
+            <option repeat.for="domain of availableDomains">
+              ${domain.name}
+            </option>
+          </select>
+          &nbsp;
+          <button class="btn btn-sm btn-primary">
+            <i class="fa fa-plus"></i> &nbsp;
+            <span>Add Domain</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <form class="pull-right">
+        <div class="form-group">
+          <select class="form-control input-xs">
+            <option>(All logs)</option>
+            <option repeat.for="domain of linkedDomains">
+              ${domain.name}
+            </option>
+          </select>
+        </div>
+      </form>
+
+      <h3 class="panel-title">
+        <i class="fa fa-terminal"></i> &nbsp;
+        <span>Logs</span>
+      </h3>
+    </div>
+    <div class="panel-body">
+      <samp>
+        <pre class="console">> This text is meant to be treated as sample output from a
+computer program.</pre>
+      </samp>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <i class="fa fa-tasks"></i> &nbsp;
+        <span>Operations</span>
+      </h3>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <th>Name:</th>
+        <th>Command:</th>
+        <th>Description:</th>
+        <th>Status:</th>
+        <th>CPU:</th>
+        <th>Memory:</th>
+        <th>Disk:</th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        <tr repeat.for="operation of app.operations"
+            if.bind="operation.machineId === $parent.machine.id">
+          <td>
+            <a href="#/o/${operation.name}">
+              <strong>${operation.name}</strong>
+            </a>
+          </td>
+          <td>
+            ${operation.command}
+          </td>
+          <td>
+            <p class="text-muted">${operation.description}</p>
+          </td>
+          <td>
+            ${operation.status}
+          </td>
+          <td>
+            ${operation.stats[0].cpus}
+          </td>
+          <td>
+            ${operation.stats[0].memory}
+          </td>
+          <td>
+            ${operation.stats[0].disk}
+          </td>
+          <td>
+            <button class="btn btn-xs btn-warning" type="button">
+              <i class="fa fa-refresh"></i> &nbsp;
+              <span>Restart</span>
+            </button>
+            &nbsp;
+            <button class="btn btn-xs btn-danger" type="button">
+              <i class="fa fa-remove"></i> &nbsp;
+              <span>Kill</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>

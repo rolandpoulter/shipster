@@ -1,0 +1,11 @@
+.DS_Store
+
+dashboard/node_modules/
+dashboard/jspm_packages/
+dashboard/dist/
+dashboard/doc/
+
+docs/
+node_modules/
+pem/
+storage/

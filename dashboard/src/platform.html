@@ -1,0 +1,88 @@
+<template>
+  <div class="row">
+    <div class="col-xs-6">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="fa fa-pencil-square-o"></i> &nbsp;
+            <span>Edit Platform</span>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <form role="form" class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Name</label>
+              <div class="col-sm-8">
+                <input type="text" placeholder="tux" class="form-control" value.bind="platform.name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">OS</label>
+              <div class="col-sm-8">
+                <input type="text" placeholder="linux" class="form-control" value.bind="platform.os">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Description</label>
+              <div class="col-sm-8">
+                <input type="text" placeholder="special vm" class="form-control" value.bind="platform.description">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="panel-footer">
+          <button class="btn btn-sm btn-success pull-right"
+                  click.delegate="save()"
+                  disabled.bind="!canSave">
+            <i class="fa fa-save"></i>  &nbsp;
+            <span>Save</span>
+          </button>
+
+          <button class="btn btn-sm btn-default"
+                  click.delegate="cancel()"
+                  disabled.bind="!canCancel">
+            <i class="fa fa-recycle"></i> &nbsp;
+            <span>Cancel</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-xs-6">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="fa fa-hdd-o"></i> &nbsp;
+            <span>Machines</span>
+          </h3>
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <th>Name:</th>
+            <th>IP:</th>
+            <th>Description:</th>
+          </thead>
+          <tbody>
+            <tr repeat.for="machine of app.machines"
+                if.bind="machine.platformId === $parent.platform.id">
+              <td>
+                <a href="#/m/${machine.name}">
+                  <strong>${machine.name}</strong>
+                </a>
+              </td>
+              <td>
+                ${machine.ip}
+              </td>
+              <td>
+                <p class="text-muted">${machine.description}</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</template>

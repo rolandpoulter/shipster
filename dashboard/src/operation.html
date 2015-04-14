@@ -1,0 +1,168 @@
+<template>
+  <div class="row">
+    <div class="col-xs-8">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="fa fa-pencil-square-o"></i> &nbsp;
+            <span>Edit Operation</span>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <form role="form" class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Name</label>
+              <div class="col-sm-10">
+                <input type="text" placeholder="email" class="form-control" value.bind="operation.name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Description</label>
+              <div class="col-sm-10">
+                <input type="text" placeholder="email" class="form-control" value.bind="operation.description">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="panel-footer">
+          <button class="btn btn-sm btn-success pull-right"
+                  click.delegate="save()"
+                  disabled.bind="!canSave">
+            <i class="fa fa-save"></i> &nbsp;
+            <span>Save</span>
+          </button>
+
+          <button class="btn btn-sm btn-default"
+                  click.delegate="cancel()"
+                  disabled.bind="!canCancel">
+            <i class="fa fa-recycle"></i> &nbsp;
+            <span>Cancel</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-xs-4">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="fa fa-globe"></i> &nbsp;
+            <span>Domain</span>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <strong class="col-xs-5 text-muted">URL</strong>
+            <span class="col-xs-7">${operation.domain.url}</span>
+          </div>
+          <div class="row">
+            <strong class="col-xs-5 text-muted">Name</strong>
+            <span class="col-xs-7">
+              <a href="#/o/${operation.domain.name}">${operation.domain.name}</a>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="fa fa-dot-circle-o"></i> &nbsp;
+            <span>Platform</span>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <strong class="col-xs-5 text-muted">OS</strong>
+            <span class="col-xs-7">${operation.machine.platform.os}</span>
+          </div>
+          <div class="row">
+            <strong class="col-xs-5 text-muted">Name</strong>
+            <span class="col-xs-7">
+              <a href="#/p/${operation.machine.platform.name}">
+                ${operation.machine.platform.name}
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="fa fa-hdd-o"></i> &nbsp;
+            <span>Machine</span>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <strong class="col-xs-5 text-muted">Name</strong>
+            <span class="col-xs-7">
+              <a href="#/m/${operation.machine.name}">
+                ${operation.machine.name}
+              </a>
+            </span>
+          </div>
+          <div class="row">
+            <strong class="col-xs-5 text-muted">Architecture</strong>
+            <span class="col-xs-7">${operation.machine.architecture}</span>
+          </div>
+          <div class="row">
+            <strong class="col-xs-5 text-muted">CPUs</strong>
+            <span class="col-xs-7">${operation.machine.resources.cpus}</span>
+          </div>
+          <div class="row">
+            <strong class="col-xs-5 text-muted">Memory</strong>
+            <span class="col-xs-7">${operation.machine.resources.memory}</span>
+          </div>
+          <div class="row">
+            <strong class="col-xs-5 text-muted">Disk</strong>
+            <span class="col-xs-7">${operation.machine.resources.disk}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="fa fa-rocket"></i> &nbsp;
+            <span>Ship</span>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <strong class="col-xs-5 text-muted">Name</strong>
+            <span class="col-xs-7">
+              <a href="#/s/${operation.ship.name}">
+                ${operation.ship.name}
+              </a>
+            </span>
+          </div>
+          <div class="row">
+            <strong class="col-xs-5 text-muted">Description</strong>
+            <span class="col-xs-7">${operation.ship.description}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+
+      <h3 class="panel-title">
+        <i class="fa fa-terminal"></i> &nbsp;
+        <span>Logs</span>
+      </h3>
+    </div>
+    <div class="panel-body">
+      <samp>
+        <pre class="console">> This text is meant to be treated as sample output from a
+computer program.</pre>
+      </samp>
+    </div>
+  </div>
+</template>

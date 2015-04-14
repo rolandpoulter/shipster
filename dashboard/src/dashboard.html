@@ -1,0 +1,208 @@
+<template>
+  <div class="jumbotron">
+    <h2>Hello, Shipster! <small>from <a href="http://shipify.io" class="text-info">shipify.io</a></small></h2>
+    <p>Shipster is a tool written in Node.JS to help manage distrubuted processes across multiple networks.</p>
+    <p>To get started click on one of the following buttons!</p>
+    <p>
+      <a class="btn btn-primary" href="#/dash/dsw" role="button">
+        <i class="fa fa-sitemap"></i> &nbsp;
+        <span>Go to Domain Setup Wizard</span>
+      </a>
+      &nbsp;
+      <a class="btn btn-success" href="#/dash/sy" role="button">
+        <i class="fa fa-cubes"></i> &nbsp;
+        <span>Go to the Ship Yard to Launch a Ship</span>
+      </a>
+    </p>
+  </div>
+  <div class="row">
+    <div class="col-xs-4">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="fa fa-bar-chart"></i> &nbsp;
+            <span>CPUs Usage</span>
+          </h3>
+        </div>
+        <div class="panel-body" id="dash_cpus_usage"></div>
+      </div>
+
+    </div>
+    <div class="col-xs-4">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="fa fa-area-chart"></i> &nbsp;
+            <span>Memory Usage</span>
+          </h3>
+        </div>
+        <div class="panel-body" id="dash_memory_usage"></div>
+      </div>
+
+    </div>
+    <div class="col-xs-4">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="fa fa-pie-chart"></i> &nbsp;
+            <span>Disk Usage</span>
+          </h3>
+        </div>
+        <div class="panel-body" id="dash_disk_usage"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <i class="fa fa-stethoscope"></i> &nbsp;<!-- use fa-heatbeat from 4.3 -->
+        <span>Operations Manager</span>
+      </h3>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <th>Name:</th>
+        <th>Command:</th>
+        <th>Description:</th>
+        <th>Status:</th>
+        <th>CPU:</th>
+        <th>Memory:</th>
+        <th>Disk:</th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        <tr repeat.for="operation of app.operations">
+          <td>
+            <a href="#/o/${operation.name}">
+              <strong>${operation.name}</strong>
+            </a>
+          </td>
+          <td>
+            ${operation.command}
+          </td>
+          <td>
+            <p class="text-muted">${operation.description}</p>
+          </td>
+          <td>
+            ${operation.status}
+          </td>
+          <td>
+            ${operation.stats[0].cpus}
+          </td>
+          <td>
+            ${operation.stats[0].memory}
+          </td>
+          <td>
+            ${operation.stats[0].disk}
+          </td>
+          <td>
+            <button class="btn btn-xs btn-warning" type="button">
+              <i class="fa fa-refresh"></i> &nbsp;
+              <span>Restart</span>
+            </button>
+            &nbsp;
+            <button class="btn btn-xs btn-danger" type="button">
+              <i class="fa fa-remove"></i> &nbsp;
+              <span>Kill</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <a name="/dash/sy"></a>
+      <h3 class="panel-title">
+        <i class="fa fa-cubes"></i> &nbsp;
+        <span>Ship Yard</span>
+      </h3>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <th>Name:</th>
+        <th>Description:</th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        <tr repeat.for="ship of app.ships">
+          <td>
+            <a href="#/s/${ship.name}">
+              <strong>${ship.name}</strong>
+            </a>
+          </td>
+          <td>
+            <p class="text-muted">${ship.description}</p>
+          </td>
+          <td>
+            <button class="btn btn-xs btn-primary" type="button">
+              <i class="fa fa-cloud-upload"></i> &nbsp;
+              <span>Launch</span>
+            </button>
+            &nbsp;
+            <button class="btn btn-xs btn-danger" type="button">
+              <i class="fa fa-remove"></i> &nbsp;
+              <span>Remove</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <a name="/dash/dsw"></a>
+      <h3 class="panel-title">
+        <i class="fa fa-sitemap"></i> &nbsp;
+        <span>Domain Setup Wizard</span>
+      </h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-xs-3">
+          <ul class="nav nav-pills nav-stacked">
+            <li role="presentation" class="active">
+              <a href="#"><small>1.</small> &nbsp; Choose Domain</a>
+            </li>
+            <li role="presentation">
+              <a href="#"><small>2.</small> &nbsp; Create Platforms</a>
+            </li>
+            <li role="presentation">
+              <a href="#"><small>3.</small> &nbsp; Connect Machines</a>
+            </li>
+            <li role="presentation">
+              <a href="#"><small>4.</small> &nbsp; Install Ships</a>
+            </li>
+            <li role="presentation">
+              <a href="#"><small>5.</small> &nbsp; Launch Operations</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-xs-9">
+          <div if.bind="true"><!-- Step 1. Choose Domain -->
+            1
+          </div>
+          <div if.bind="false"><!-- Step 2. Create Platformss -->
+            2
+          </div>
+          <div if.bind="false"><!-- Step 3. Connect Machines -->
+            3
+          </div>
+          <div if.bind="false"><!-- Step 4. Install Ships -->
+            4
+          </div>
+          <div if.bind="false"><!-- Step 5. Launch Operations -->
+            5
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,78 @@
+<template>
+  <import from="./loading-indicator"></import>
+  <import from="./app-menu"></import>
+
+  <div class="container-fluid">
+
+    <loading-indicator loading.bind="router.isNavigating || api.isRequesting"></loading-indicator>
+
+    <ol class="breadcrumb" if.bind="selectedId">
+      <li>
+        <i class="fa fa-dashboard"></i> &nbsp;
+        <a href="#/dash">Dashboard</a>
+      </li>
+      <li class="active">
+        <i class="fa ${iconMap[selectedType]}"></i> &nbsp;
+        <span>${getSlugFromId(selectedId, selectedType)}</span>
+      </li>
+    </ol>
+
+    <div class="row">
+      <div class="col-xs-4">
+        <app-menu collection.bind="domains"
+                  collection-slug="domains"
+                  collection-name="Domains"
+                  collection-name-singular="Domain"
+                  app-select-method="selectDomain"
+                  app-create-method="createDomain">
+        </app-menu>
+
+        <app-menu collection.bind="machines"
+                  collection-slug="machines"
+                  collection-name="Machines"
+                  collection-name-singular="Machine"
+                  app-select-method="selectMachine"
+                  app-create-method="createMachine"
+                  extra-description-property="ip">
+        </app-menu>
+
+        <app-menu collection.bind="platforms"
+                  collection-slug="platforms"
+                  collection-name="Platforms"
+                  collection-name-singular="Platform"
+                  app-select-method="selectPlatform"
+                  app-create-method="selectPlatform">
+        </app-menu>
+
+        <app-menu collection.bind="ships"
+                  collection-slug="ships"
+                  collection-name="Ships"
+                  collection-name-singular="Ship"
+                  app-select-method="selectShip"
+                  app-create-method="createShip">
+        </app-menu>
+
+        <app-menu collection.bind="operations"
+                  collection-slug="operations"
+                  collection-name="Operations"
+                  collection-name-singular="Operation"
+                  app-select-method="selectOperation"
+                  app-create-method="createOperation"
+                  name-begins-with-vowel="true">
+        </app-menu>
+      </div>
+
+      <div class="col-xs-8">
+        <router-view></router-view>
+      </div>
+    </div>
+
+    <div class="well well-sm text-right">
+      <strong>Shipster</strong>
+      <!-- <span class="text-success">@0.1.0</span> -->
+      <small class="text-muted">from</small>
+      <a href="http://shipify.io" class="text-info">shipify.io</a>
+      <!-- <small class="text-muted"><i class="fa fa-copyright"></i>2015</small> -->
+    </div>
+  </div>
+</template>

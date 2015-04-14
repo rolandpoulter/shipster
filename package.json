@@ -1,0 +1,51 @@
+{
+  "name": "shipster",
+  "version": "0.0.0",
+  "description": "manage distributed processes across mulitple networks",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./start.js",
+    "test": "node ./test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^0.9.0",
+    "chai": "^1.10.0",
+    "cli": "^0.6.5",
+    "config": "^1.10.0",
+    "debug": "^2.1.1",
+    "dnode": "^1.2.0",
+    "docker-pig": "^0.4.0",
+    "flightplan": "^0.6.0",
+    "git-ssh": "0.0.1",
+    "gulp": "^3.8.10",
+    "gulp-util": "^3.0.2",
+    "hapi": "^8.1.0",
+    "kue": "^0.8.11",
+    "lodash": "^3.0.1",
+    "node-http-proxy": "0.0.3",
+    "pem": "^1.5.0",
+    "pm2": "^0.12.4",
+    "redis": "^0.12.1",
+    "redis-server": "0.0.1",
+    "request": "^2.51.0",
+    "shelljs": "^0.3.0",
+    "sinon": "^1.12.2",
+    "ssh-keygen": "^0.2.1",
+    "ssh2": "^0.4.0",
+    "swarm": "git://github.com/gritzko/swarm.git#1f7c73644bc68128eb7a291e5a122491a6269da6",
+    "swarm-restapi": "^0.3.24",
+    "uuid": "^2.0.1",
+    "winston": "^0.8.3",
+    "ws": "^0.7.1"
+  },
+  "devDependencies": {
+    "gulp-cached": "^1.0.2",
+    "gulp-docco": "0.0.4",
+    "gulp-git": "^1.0.0",
+    "gulp-remember": "^0.3.0",
+    "gulp-shell": "^0.3.0",
+    "karma": "^0.12.31"
+  }
+}
